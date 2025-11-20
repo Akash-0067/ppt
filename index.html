@@ -1,401 +1,436 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Audio Speed Changer Project</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            overflow: hidden;
-        }
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        overflow: hidden;
+      }
 
-        .presentation {
-            width: 100vw;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+      .presentation {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
 
-        .slide {
-            width: 90%;
-            max-width: 1000px;
-            height: 85vh;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            padding: 60px;
-            display: none;
-            flex-direction: column;
-            justify-content: center;
-            animation: slideIn 0.5s ease;
-        }
+      .slide {
+        width: 90%;
+        max-width: 1000px;
+        height: 85vh;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        padding: 60px;
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        animation: slideIn 0.5s ease;
+      }
 
-        .slide.active {
-            display: flex;
-        }
+      .slide.active {
+        display: flex;
+      }
 
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: translateX(50px);
         }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
 
-        h1 {
-            color: #667eea;
-            font-size: 3em;
-            margin-bottom: 20px;
-            text-align: center;
-        }
+      h1 {
+        color: #667eea;
+        font-size: 3em;
+        margin-bottom: 20px;
+        text-align: center;
+      }
 
-        h2 {
-            color: #764ba2;
-            font-size: 2.5em;
-            margin-bottom: 30px;
-        }
+      h2 {
+        color: #764ba2;
+        font-size: 2.5em;
+        margin-bottom: 30px;
+      }
 
-        h3 {
-            color: #667eea;
-            font-size: 1.8em;
-            margin-bottom: 20px;
-            margin-top: 20px;
-        }
+      h3 {
+        color: #667eea;
+        font-size: 1.8em;
+        margin-bottom: 20px;
+        margin-top: 20px;
+      }
 
-        p, li {
-            font-size: 1.3em;
-            line-height: 1.8;
-            color: #333;
-            margin-bottom: 15px;
-        }
+      p,
+      li {
+        font-size: 1.3em;
+        line-height: 1.8;
+        color: #333;
+        margin-bottom: 15px;
+      }
 
-        ul {
-            list-style: none;
-            padding-left: 0;
-        }
+      ul {
+        list-style: none;
+        padding-left: 0;
+      }
 
-        li {
-            padding-left: 30px;
-            position: relative;
-        }
+      li {
+        padding-left: 30px;
+        position: relative;
+      }
 
-        li:before {
-            content: "→";
-            position: absolute;
-            left: 0;
-            color: #667eea;
-            font-weight: bold;
-        }
+      li:before {
+        content: "→";
+        position: absolute;
+        left: 0;
+        color: #667eea;
+        font-weight: bold;
+      }
 
-        .subtitle {
-            color: #666;
-            font-size: 1.5em;
-            text-align: center;
-            margin-top: 10px;
-        }
+      .subtitle {
+        color: #666;
+        font-size: 1.5em;
+        text-align: center;
+        margin-top: 10px;
+      }
 
-        .controls {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 20px;
-            z-index: 100;
-        }
+      .controls {
+        position: fixed;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 20px;
+        z-index: 100;
+      }
 
-        button {
-            padding: 15px 30px;
-            font-size: 1.1em;
-            border: none;
-            border-radius: 50px;
-            background: white;
-            color: #667eea;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            transition: all 0.3s;
-            font-weight: 600;
-        }
+      button {
+        padding: 15px 30px;
+        font-size: 1.1em;
+        border: none;
+        border-radius: 50px;
+        background: white;
+        color: #667eea;
+        cursor: pointer;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s;
+        font-weight: 600;
+      }
 
-        button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-        }
+      button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      }
 
-        button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
+      button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
 
-        .slide-number {
-            position: fixed;
-            top: 30px;
-            right: 30px;
-            color: white;
-            font-size: 1.2em;
-            font-weight: 600;
-        }
+      .slide-number {
+        position: fixed;
+        top: 30px;
+        right: 30px;
+        color: white;
+        font-size: 1.2em;
+        font-weight: 600;
+      }
 
-        .diagram {
-            background: #f8f9fa;
-            padding: 30px;
-            border-radius: 15px;
-            margin: 20px 0;
-            border-left: 5px solid #667eea;
-        }
+      .diagram {
+        background: #f8f9fa;
+        padding: 30px;
+        border-radius: 15px;
+        margin: 20px 0;
+        border-left: 5px solid #667eea;
+      }
 
-        .highlight {
-            background: linear-gradient(120deg, #a8edea 0%, #fed6e3 100%);
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-weight: 600;
-        }
+      .highlight {
+        background: linear-gradient(120deg, #a8edea 0%, #fed6e3 100%);
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-weight: 600;
+      }
 
-        .center {
-            text-align: center;
-        }
+      .center {
+        text-align: center;
+      }
 
-        .emoji {
-            font-size: 3em;
-            margin: 20px 0;
-        }
+      .emoji {
+        font-size: 3em;
+        margin: 20px 0;
+      }
 
-        .code-box {
-            background: #2d2d2d;
-            color: #f8f8f2;
-            padding: 20px;
-            border-radius: 10px;
-            font-family: 'Courier New', monospace;
-            font-size: 1.1em;
-            margin: 20px 0;
-        }
+      .code-box {
+        background: #2d2d2d;
+        color: #f8f8f2;
+        padding: 20px;
+        border-radius: 10px;
+        font-family: "Courier New", monospace;
+        font-size: 1.1em;
+        margin: 20px 0;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
+    <script>
+      window.WIDGET_SITE_ID = "691f3b12540e5d9124714272";
+    </script>
+
+    <script src="https://echomark.vercel.app/widget.js"></script>
     <div class="presentation">
-        <!-- Slide 1: Title -->
-        <div class="slide active">
-            <div class="center">
-                <div class="emoji">🎵</div>
-                <h1>Audio Speed Changer</h1>
-                <p class="subtitle">Change playback speed without changing pitch</p>
-                <p class="subtitle" style="margin-top: 40px; font-size: 1.2em;">Multi-Rate Signal Processing Project</p>
-            </div>
+      <!-- Slide 1: Title -->
+      <div class="slide active">
+        <div class="center">
+          <div class="emoji">🎵</div>
+          <h1>Audio Speed Changer</h1>
+          <p class="subtitle">Change playback speed without changing pitch</p>
+          <p class="subtitle" style="margin-top: 40px; font-size: 1.2em">
+            Multi-Rate Signal Processing Project
+          </p>
         </div>
+      </div>
 
-        <!-- Slide 2: What is it? -->
-        <div class="slide">
-            <h2>What Does This Do?</h2>
-            <p>This tool lets you change how fast or slow audio plays, like:</p>
-            <ul>
-                <li><span class="highlight">Speed up audio</span> - makes voices sound like chipmunks</li>
-                <li><span class="highlight">Slow down audio</span> - makes voices sound deep and slow</li>
-                <li>Works with any audio file (MP3, WAV, FLAC, etc.)</li>
-                <li>You control exactly how much faster or slower</li>
-            </ul>
-            <div class="emoji center">🎧 → 🐿️ or 🐢</div>
-        </div>
+      <!-- Slide 2: What is it? -->
+      <div class="slide">
+        <h2>What Does This Do?</h2>
+        <p>This tool lets you change how fast or slow audio plays, like:</p>
+        <ul>
+          <li>
+            <span class="highlight">Speed up audio</span> - makes voices sound
+            like chipmunks
+          </li>
+          <li>
+            <span class="highlight">Slow down audio</span> - makes voices sound
+            deep and slow
+          </li>
+          <li>Works with any audio file (MP3, WAV, FLAC, etc.)</li>
+          <li>You control exactly how much faster or slower</li>
+        </ul>
+        <div class="emoji center">🎧 → 🐿️ or 🐢</div>
+      </div>
 
-        <!-- Slide 3: How It Works - Overview -->
-        <div class="slide">
-            <h2>How Does It Work?</h2>
-            <p>We use two main techniques:</p>
-            
-            <h3>1. Downsampling (Speed Up)</h3>
-            <p>Remove some audio samples to make it play faster</p>
-            
-            <h3>2. Upsampling (Slow Down)</h3>
-            <p>Add more audio samples to make it play slower</p>
-            
-            <div class="diagram">
-                <p><strong>Think of it like frames in a video:</strong></p>
-                <p>More frames = slower motion</p>
-                <p>Fewer frames = faster motion</p>
-            </div>
-        </div>
+      <!-- Slide 3: How It Works - Overview -->
+      <div class="slide">
+        <h2>How Does It Work?</h2>
+        <p>We use two main techniques:</p>
 
-        <!-- Slide 4: Speed Up Process -->
-        <div class="slide">
-            <h2>Speed Up (Downsampling)</h2>
-            <p>To make audio play 2x faster:</p>
-            <ul>
-                <li><strong>Step 1:</strong> Apply a filter to prevent distortion</li>
-                <li><strong>Step 2:</strong> Keep every 2nd sample, throw away the rest</li>
-                <li><strong>Result:</strong> Half the samples = plays twice as fast</li>
-            </ul>
-            
-            <div class="diagram">
-                <p><strong>Example:</strong></p>
-                <p>Original: 10,000 samples</p>
-                <p>After 2x speedup: 5,000 samples</p>
-                <p>Plays in half the time!</p>
-            </div>
-        </div>
+        <h3>1. Downsampling (Speed Up)</h3>
+        <p>Remove some audio samples to make it play faster</p>
 
-        <!-- Slide 5: Slow Down Process -->
-        <div class="slide">
-            <h2>Slow Down (Upsampling)</h2>
-            <p>To make audio play 2x slower:</p>
-            <ul>
-                <li><strong>Step 1:</strong> Insert zeros between each sample</li>
-                <li><strong>Step 2:</strong> Apply a smoothing filter to fill in the gaps</li>
-                <li><strong>Result:</strong> Double the samples = plays twice as slow</li>
-            </ul>
-            
-            <div class="diagram">
-                <p><strong>Example:</strong></p>
-                <p>Original: 10,000 samples</p>
-                <p>After 2x slowdown: 20,000 samples</p>
-                <p>Plays in double the time!</p>
-            </div>
-        </div>
+        <h3>2. Upsampling (Slow Down)</h3>
+        <p>Add more audio samples to make it play slower</p>
 
-        <!-- Slide 6: The Filter -->
-        <div class="slide">
-            <h2>Why Do We Need Filters?</h2>
-            <p>Filters prevent audio from sounding broken or distorted:</p>
-            
-            <h3>For Speed Up:</h3>
-            <p>Anti-aliasing filter removes high frequencies that would cause weird sounds</p>
-            
-            <h3>For Slow Down:</h3>
-            <p>Interpolation filter smoothly fills in the gaps between samples</p>
-            
-            <div class="diagram">
-                <p><strong>Without filter:</strong> Choppy, robotic sound</p>
-                <p><strong>With filter:</strong> Smooth, natural sound</p>
-            </div>
+        <div class="diagram">
+          <p><strong>Think of it like frames in a video:</strong></p>
+          <p>More frames = slower motion</p>
+          <p>Fewer frames = faster motion</p>
         </div>
+      </div>
 
-        <!-- Slide 7: How to Use -->
-        <div class="slide">
-            <h2>How to Use the Tool</h2>
-            <ul>
-                <li>Upload your audio file (works in Google Colab or locally)</li>
-                <li>Choose: Speed up or Slow down</li>
-                <li>Enter a speed factor (2.0 = double speed, 0.5 = half speed)</li>
-                <li>The tool processes your audio</li>
-                <li>Download the modified audio file</li>
-                <li>Optional: See visual graphs comparing before/after</li>
-            </ul>
-            <p style="margin-top: 30px;"><strong>Takes just a few seconds to process!</strong></p>
-        </div>
+      <!-- Slide 4: Speed Up Process -->
+      <div class="slide">
+        <h2>Speed Up (Downsampling)</h2>
+        <p>To make audio play 2x faster:</p>
+        <ul>
+          <li><strong>Step 1:</strong> Apply a filter to prevent distortion</li>
+          <li>
+            <strong>Step 2:</strong> Keep every 2nd sample, throw away the rest
+          </li>
+          <li>
+            <strong>Result:</strong> Half the samples = plays twice as fast
+          </li>
+        </ul>
 
-        <!-- Slide 8: Technical Details -->
-        <div class="slide">
-            <h2>Technical Concepts</h2>
-            
-            <h3>Sample Rate</h3>
-            <p>Number of audio samples per second (usually 44,100 Hz)</p>
-            
-            <h3>Butterworth Filter</h3>
-            <p>A smooth filter that doesn't distort the audio</p>
-            
-            <h3>Normalization</h3>
-            <p>Adjusts volume so audio doesn't clip or distort</p>
-            
-            <p style="margin-top: 30px;">All of this happens automatically - you just choose the speed!</p>
+        <div class="diagram">
+          <p><strong>Example:</strong></p>
+          <p>Original: 10,000 samples</p>
+          <p>After 2x speedup: 5,000 samples</p>
+          <p>Plays in half the time!</p>
         </div>
+      </div>
 
-        <!-- Slide 9: Applications -->
-        <div class="slide">
-            <h2>Real-World Uses</h2>
-            <ul>
-                <li><strong>Learning:</strong> Slow down lectures to understand better</li>
-                <li><strong>Music:</strong> Speed up songs for workout playlists</li>
-                <li><strong>Podcasts:</strong> Listen faster to save time</li>
-                <li><strong>Audio editing:</strong> Create special effects</li>
-                <li><strong>Accessibility:</strong> Help people with hearing difficulties</li>
-                <li><strong>Fun:</strong> Make funny voice recordings</li>
-            </ul>
-        </div>
+      <!-- Slide 5: Slow Down Process -->
+      <div class="slide">
+        <h2>Slow Down (Upsampling)</h2>
+        <p>To make audio play 2x slower:</p>
+        <ul>
+          <li><strong>Step 1:</strong> Insert zeros between each sample</li>
+          <li>
+            <strong>Step 2:</strong> Apply a smoothing filter to fill in the
+            gaps
+          </li>
+          <li>
+            <strong>Result:</strong> Double the samples = plays twice as slow
+          </li>
+        </ul>
 
-        <!-- Slide 10: Summary -->
-        <div class="slide">
-            <h2>Summary</h2>
-            <div class="diagram">
-                <p><strong>What we learned:</strong></p>
-                <ul>
-                    <li>Downsampling removes samples → faster playback</li>
-                    <li>Upsampling adds samples → slower playback</li>
-                    <li>Filters keep the audio sounding good</li>
-                    <li>Easy to use with any audio file</li>
-                </ul>
-            </div>
-            <div class="center" style="margin-top: 40px;">
-                <div class="emoji">✨</div>
-                <h3>Simple concept, powerful results!</h3>
-            </div>
+        <div class="diagram">
+          <p><strong>Example:</strong></p>
+          <p>Original: 10,000 samples</p>
+          <p>After 2x slowdown: 20,000 samples</p>
+          <p>Plays in double the time!</p>
         </div>
+      </div>
 
-        <!-- Slide 11: Thank You -->
-        <div class="slide">
-            <div class="center">
-                <div class="emoji">🎉</div>
-                <h1>Thank You!</h1>
-                <p class="subtitle" style="margin-top: 40px;">Questions?</p>
-            </div>
+      <!-- Slide 6: The Filter -->
+      <div class="slide">
+        <h2>Why Do We Need Filters?</h2>
+        <p>Filters prevent audio from sounding broken or distorted:</p>
+
+        <h3>For Speed Up:</h3>
+        <p>
+          Anti-aliasing filter removes high frequencies that would cause weird
+          sounds
+        </p>
+
+        <h3>For Slow Down:</h3>
+        <p>Interpolation filter smoothly fills in the gaps between samples</p>
+
+        <div class="diagram">
+          <p><strong>Without filter:</strong> Choppy, robotic sound</p>
+          <p><strong>With filter:</strong> Smooth, natural sound</p>
         </div>
+      </div>
+
+      <!-- Slide 7: How to Use -->
+      <div class="slide">
+        <h2>How to Use the Tool</h2>
+        <ul>
+          <li>Upload your audio file (works in Google Colab or locally)</li>
+          <li>Choose: Speed up or Slow down</li>
+          <li>Enter a speed factor (2.0 = double speed, 0.5 = half speed)</li>
+          <li>The tool processes your audio</li>
+          <li>Download the modified audio file</li>
+          <li>Optional: See visual graphs comparing before/after</li>
+        </ul>
+        <p style="margin-top: 30px">
+          <strong>Takes just a few seconds to process!</strong>
+        </p>
+      </div>
+
+      <!-- Slide 8: Technical Details -->
+      <div class="slide">
+        <h2>Technical Concepts</h2>
+
+        <h3>Sample Rate</h3>
+        <p>Number of audio samples per second (usually 44,100 Hz)</p>
+
+        <h3>Butterworth Filter</h3>
+        <p>A smooth filter that doesn't distort the audio</p>
+
+        <h3>Normalization</h3>
+        <p>Adjusts volume so audio doesn't clip or distort</p>
+
+        <p style="margin-top: 30px">
+          All of this happens automatically - you just choose the speed!
+        </p>
+      </div>
+
+      <!-- Slide 9: Applications -->
+      <div class="slide">
+        <h2>Real-World Uses</h2>
+        <ul>
+          <li>
+            <strong>Learning:</strong> Slow down lectures to understand better
+          </li>
+          <li><strong>Music:</strong> Speed up songs for workout playlists</li>
+          <li><strong>Podcasts:</strong> Listen faster to save time</li>
+          <li><strong>Audio editing:</strong> Create special effects</li>
+          <li>
+            <strong>Accessibility:</strong> Help people with hearing
+            difficulties
+          </li>
+          <li><strong>Fun:</strong> Make funny voice recordings</li>
+        </ul>
+      </div>
+
+      <!-- Slide 10: Summary -->
+      <div class="slide">
+        <h2>Summary</h2>
+        <div class="diagram">
+          <p><strong>What we learned:</strong></p>
+          <ul>
+            <li>Downsampling removes samples → faster playback</li>
+            <li>Upsampling adds samples → slower playback</li>
+            <li>Filters keep the audio sounding good</li>
+            <li>Easy to use with any audio file</li>
+          </ul>
+        </div>
+        <div class="center" style="margin-top: 40px">
+          <div class="emoji">✨</div>
+          <h3>Simple concept, powerful results!</h3>
+        </div>
+      </div>
+
+      <!-- Slide 11: Thank You -->
+      <div class="slide">
+        <div class="center">
+          <div class="emoji">🎉</div>
+          <h1>Thank You!</h1>
+          <p class="subtitle" style="margin-top: 40px">Questions?</p>
+        </div>
+      </div>
     </div>
 
     <div class="slide-number">
-        <span id="current">1</span> / <span id="total">11</span>
+      <span id="current">1</span> / <span id="total">11</span>
     </div>
 
     <div class="controls">
-        <button id="prev">← Previous</button>
-        <button id="next">Next →</button>
+      <button id="prev">← Previous</button>
+      <button id="next">Next →</button>
     </div>
 
     <script>
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('.slide');
-        const prevBtn = document.getElementById('prev');
-        const nextBtn = document.getElementById('next');
-        const currentSpan = document.getElementById('current');
-        const totalSpan = document.getElementById('total');
+      let currentSlide = 0;
+      const slides = document.querySelectorAll(".slide");
+      const prevBtn = document.getElementById("prev");
+      const nextBtn = document.getElementById("next");
+      const currentSpan = document.getElementById("current");
+      const totalSpan = document.getElementById("total");
 
-        totalSpan.textContent = slides.length;
+      totalSpan.textContent = slides.length;
 
-        function showSlide(n) {
-            slides[currentSlide].classList.remove('active');
-            currentSlide = (n + slides.length) % slides.length;
-            slides[currentSlide].classList.add('active');
-            currentSpan.textContent = currentSlide + 1;
+      function showSlide(n) {
+        slides[currentSlide].classList.remove("active");
+        currentSlide = (n + slides.length) % slides.length;
+        slides[currentSlide].classList.add("active");
+        currentSpan.textContent = currentSlide + 1;
 
-            prevBtn.disabled = currentSlide === 0;
-            nextBtn.disabled = currentSlide === slides.length - 1;
+        prevBtn.disabled = currentSlide === 0;
+        nextBtn.disabled = currentSlide === slides.length - 1;
+      }
+
+      prevBtn.addEventListener("click", () => {
+        if (currentSlide > 0) showSlide(currentSlide - 1);
+      });
+
+      nextBtn.addEventListener("click", () => {
+        if (currentSlide < slides.length - 1) showSlide(currentSlide + 1);
+      });
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowLeft" && currentSlide > 0) {
+          showSlide(currentSlide - 1);
+        } else if (e.key === "ArrowRight" && currentSlide < slides.length - 1) {
+          showSlide(currentSlide + 1);
         }
+      });
 
-        prevBtn.addEventListener('click', () => {
-            if (currentSlide > 0) showSlide(currentSlide - 1);
-        });
-
-        nextBtn.addEventListener('click', () => {
-            if (currentSlide < slides.length - 1) showSlide(currentSlide + 1);
-        });
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowLeft' && currentSlide > 0) {
-                showSlide(currentSlide - 1);
-            } else if (e.key === 'ArrowRight' && currentSlide < slides.length - 1) {
-                showSlide(currentSlide + 1);
-            }
-        });
-
-        prevBtn.disabled = true;
+      prevBtn.disabled = true;
     </script>
-</body>
+  </body>
 </html>
